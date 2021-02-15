@@ -19,7 +19,8 @@ module.exports.getSignUp = (req, res) => {
 
 // renders login
 module.exports.getLogin = (req, res) => {
-    res.send("login page")
+    // controller actions
+    res.render('login');
 }
 
 // creates new user and assigns a JWT for instant login
@@ -100,7 +101,7 @@ module.exports.login = async (req, res) => {
         // then generate a JWT if the user is found and password mathces
         const token = createToken(user.id)
 
-        // add toekn to response cookies
+        // add token to response cookies
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge*1000})
 
         // return status code and JSON user data
