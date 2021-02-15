@@ -6,7 +6,11 @@ const {requireAuth} = require('../middleware/authMiddleware')
 const userController = require('../controllers/userController')
 
 // Get Blog and specific blog posts
-router.get('/', requireAuth, userController.placeHolderFunction)
+// '/blogs/'
+
+
+// add requireAuth back in 
+router.get('/', userController.placeHolderFunction)
 router.get('/:id', requireAuth, userController.placeHolderFunction)
 
 // Add a comment to a blog
