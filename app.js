@@ -14,7 +14,13 @@ const userRouter = require('./routes/userRoutes')
 
 const app = express();
 
-app.use(cors())
+const corsOptions = {
+  origin: true,
+  optionsSuccessStatus: 200,
+  credentials: true
+}
+
+app.use(cors(corsOptions))
 
 //DB connection
 mongoose.connect( process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true})

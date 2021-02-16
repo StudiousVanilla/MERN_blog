@@ -21,6 +21,7 @@ const requireAuth = (req, res, next) =>{
             }
             // if token is successfully verified then the next middleware is called
             else{
+                console.log('token verified');
                 next();
             }
         })

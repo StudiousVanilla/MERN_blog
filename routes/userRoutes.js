@@ -10,7 +10,7 @@ const userController = require('../controllers/userController')
 
 
 // add requireAuth back in 
-router.get('/', userController.placeHolderFunction)
+router.get('/', requireAuth, userController.placeHolderFunction)
 router.get('/:id', requireAuth, userController.placeHolderFunction)
 
 // Add a comment to a blog
