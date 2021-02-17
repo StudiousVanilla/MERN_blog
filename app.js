@@ -15,6 +15,16 @@ const userRouter = require('./routes/userRoutes')
 
 const app = express();
 
+// CORS settings
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: true,
+  optionsSuccessStatus: 204
+}
+
+app.use(cors(corsOptions))
+
 app.options('/login', function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', '*');
@@ -58,17 +68,6 @@ app.use(function(req, res, next) {
 // userChecks
 app.get('*', checkUser)
 
-// // CORS settings
-// const corsOptions = {
-//   "origin": "*",
-//   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   "preflightContinue": true,
-//   "optionsSuccessStatus": 204
-// }
-
-app.use(cors({
-  origin: 'http://localhost:3000'
-}))
 
 // routes
 app.use(authRouter);
