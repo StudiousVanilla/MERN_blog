@@ -15,6 +15,13 @@ const userRouter = require('./routes/userRoutes')
 
 const app = express();
 
+app.options('/login', function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.end();
+});
+
 
 
 //Cookie settings
