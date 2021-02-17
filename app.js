@@ -15,15 +15,15 @@ const userRouter = require('./routes/userRoutes')
 
 const app = express();
 
-// CORS settings
-const corsOptions = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": true,
-  "optionsSuccessStatus": 204
-}
+// // CORS settings
+// const corsOptions = {
+//   "origin": "*",
+//   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   "preflightContinue": true,
+//   "optionsSuccessStatus": 204
+// }
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 //Cookie settings
 app.use(
