@@ -17,7 +17,7 @@ const app = express();
 
 // CORS settings
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:3000",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: true,
   optionsSuccessStatus: 204
