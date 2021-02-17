@@ -102,7 +102,8 @@ module.exports.login = async (req, res) => {
         const token = createToken(user.id)
 
         // add token to response cookies
-        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge*1000})
+        // {httpOnly: true, maxAge: maxAge*1000}
+        res.cookie('jwt', token)
 
         // return status code and JSON user data
         res.status(201).json({user: user})

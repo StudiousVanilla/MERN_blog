@@ -30,6 +30,7 @@ app.use(
     keys: process.env.JWT_SECRET,
     secure: true,
     httpOnly: true,
+    maxAge: maxAge*1000,
     sameSite: 'none'
   })
 )
