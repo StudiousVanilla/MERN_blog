@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose')
 const {checkUser} = require('./middleware/authMiddleware')
+const cookieSession = require('cookie-session')
 
 // router initialization
 const authRouter = require('./routes/authRoutes');
@@ -14,6 +15,7 @@ const userRouter = require('./routes/userRoutes')
 
 const app = express();
 
+// CORS settings
 const corsOptions = {
   origin: true,
   optionsSuccessStatus: 200,
@@ -21,6 +23,15 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+
+//Cookie settings
+app.use(
+  cookieSession({
+    secure: true,
+    httpOnly: true,
+    sameSite: 'none'
+  })
+)
 
 //DB connection
 mongoose.connect( process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true})
