@@ -24,14 +24,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-//Cookie settings
-app.use(
-  cookieSession({
-    secure: true,
-    httpOnly: true,
-    sameSite: 'none'
-  })
-)
+// //Cookie settings
+// app.use(
+//   cookieSession({
+//     secure: true,
+//     httpOnly: true,
+//     sameSite: 'none'
+//   })
+// )
 
 //DB connection
 mongoose.connect( process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true})
