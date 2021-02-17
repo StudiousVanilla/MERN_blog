@@ -26,9 +26,9 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.options('*', function (req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader('Access-Control-Allow-Methods', 'http://localhost:3000');
+  res.setHeader("Access-Control-Allow-Headers", "http://localhost:3000");
   res.end();
 });
 
