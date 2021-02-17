@@ -17,9 +17,10 @@ const app = express();
 
 // CORS settings
 const corsOptions = {
-  'origin': 'http://localhost:3001',
-  optionsSuccessStatus: 200,
-  credentials: true
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
 }
 
 app.use(cors(corsOptions))
