@@ -25,14 +25,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-app.options('http://localhost:3000', function (req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.end();
-});
-
 
 
 //Cookie settings
