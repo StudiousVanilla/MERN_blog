@@ -11,17 +11,17 @@ const requireAuth = (req, res, next) =>{
 
     if(token){
         // verifes token using .env secret
-        jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken)=>{
+        jwt.verify(token, process.env.JWT_SECRET, (err)=>{
 
-            // if there is an error duting verification
+            // if there is an error during verification
             if(err){
                 console.log('requireAuth - Error message:');
                 console.log(err.message);
-                res.redirect('/')
-                next();
+                res.redirect('/login')
             }
             // if token is successfully verified then the next middleware is called
             else{
+                console.log('token verified');
                 next();
             }
         })
@@ -29,8 +29,7 @@ const requireAuth = (req, res, next) =>{
     // if there is no token
     else{
         console.log('requireAuth - No token');
-        res.redirect('/')
-        next();
+        res.redirect('/login')
     }
 }
 
@@ -73,7 +72,6 @@ const checkUser = (req, res, next) =>{
     // if there is no token
     else{
         console.log('checkUser - No token');
-        //res.redirect('/login')
         next();
     }
 }

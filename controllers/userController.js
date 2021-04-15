@@ -1,8 +1,15 @@
+const blogModel = require('../models/blogPostsModel')
 
 
+const placeHolderFunction = async (req, res) => {
 
-const placeHolderFunction = (req, res) => {
-    res.send({place: 'holder'})
+    let blogPosts = await blogModel.find()
+
+    console.log('placeholder firing');
+
+    res.send(blogPosts)
 }
+
+
 
 module.exports = {placeHolderFunction}

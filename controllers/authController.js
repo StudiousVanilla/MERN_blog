@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const maxAge = 30*60
 
 // creating JWT
-// when a new uses is being created 'id' id the user.id that  is generated once a user is saved in the DB, this allows for an immediate JWT generate once a user signs-up - menaing they don't have to login.
+// when a new uses is being created 'id' is the user.id that is generated once a user is saved in the DB, this allows for an immediate JWT generate once a user signs-up - menaing they don't have to login.
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: maxAge})
 }
@@ -15,6 +15,12 @@ const createToken = (id) => {
 // renders sign-up
 module.exports.getSignUp = (req, res) => {
     res.send("sign up page")
+}
+
+// renders login
+module.exports.getLogin = (req, res) => {
+    // controller actions
+    res.render('login');
 }
 
 // creates new user and assigns a JWT for instant login
@@ -42,9 +48,9 @@ module.exports.signUp =[
         try {
             //  checks to see if an email address has already been registered
             const users = await userModel.find()
-            const userCheck = users.find(user =>user.email === req.body.email)
+            const userCheck = users.find(user => user.email === req.body.email)
 
-            // if email is already in user then error JSON sent
+            // if email is already in user DB then error JSON sent
             if(userCheck){
                 return res.json({error: "Email address already in use"})
             }
@@ -53,14 +59,14 @@ module.exports.signUp =[
             let user = new userModel({
                 name: req.body.name,
                 email: req.body.email,
-                // password is hashed by model before doc is saved to DB 
+                // password is hashed by model, using a sechema.pre frunction, before doc is saved to DB 
                 password: req.body.password
             })
             try {
                 // save user to database
                 user = await user.save()
 
-                // user newly saved user to generate a JWT
+                // use newly saved user.id to generate a JWT
                 const token = createToken(user.id)
                 // add JWT to response cookies
                 res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge*1000})
@@ -80,11 +86,6 @@ module.exports.signUp =[
     }
 ]
 
-// renders login
-module.exports.getLogin = (req, res) => {
-    res.send("login page")
-}
-
 // compares email and passwords from database and assigns browser a JWT
 module.exports.login = async (req, res) => {
 
@@ -94,14 +95,15 @@ module.exports.login = async (req, res) => {
     try {
 
         // call login method from userModel to log user in
-        // (funds user and compares password)
+        // (finds user and compares password)
         const user = await userModel.login(email, password)
 
         // then generate a JWT if the user is found and password mathces
         const token = createToken(user.id)
 
-        // add toekn to response cookies
-        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge*1000})
+        // add token to response cookies
+        // {httpOnly: true, maxAge: maxAge*1000}
+        res.cookie('jwt', token)
 
         // return status code and JSON user data
         res.status(201).json({user: user})
@@ -116,5 +118,5 @@ module.exports.login = async (req, res) => {
 module.exports.logout = (req, res) =>{
     res.locals.currentUser = null
     res.cookie('jwt', '', {maxAge: 1})
-    res.json('back to login page')
+    res.redirect('/login')
 }

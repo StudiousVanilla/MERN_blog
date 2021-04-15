@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose')
 const {checkUser} = require('./middleware/authMiddleware')
+const cookieSession = require('cookie-session')
 
 // router initialization
 const authRouter = require('./routes/authRoutes');
@@ -14,7 +15,28 @@ const userRouter = require('./routes/userRoutes')
 
 const app = express();
 
-app.use(cors())
+// CORS settings
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: true,
+  optionsSuccessStatus: 204
+}
+
+app.use(cors(corsOptions))
+
+
+
+//Cookie settings
+app.use(
+  cookieSession({
+    keys: process.env.JWT_SECRET,
+    secure: true,
+    httpOnly: true,
+    maxAge: maxAge*1000,
+    sameSite: 'none'
+  })
+)
 
 //DB connection
 mongoose.connect( process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true})
@@ -38,6 +60,7 @@ app.use(function(req, res, next) {
 
 // userChecks
 app.get('*', checkUser)
+
 
 // routes
 app.use(authRouter);
